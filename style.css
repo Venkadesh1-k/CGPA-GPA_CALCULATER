@@ -40,6 +40,13 @@ nav {
   text-decoration: none;
   color: var(--white);
 }
+.lin{
+  width: 50%;
+  margin: 5% auto;
+  border-collapse: separate;
+  border-spacing: 10px;
+  overflow-x: auto;
+}
 
 /* ------------- Input section ------------- */
 
@@ -180,12 +187,24 @@ footer {
 }
 .lin {
     position: absolute;
-    top: 10%;
-    left: 18%;
-    transition: color 0.3s, transform 0.3s; /* Added transition for a smooth effect */
+    top: 120%;
+    left: 35%;
+    transition: color 0.3s, transform 0.3s; 
 }
 
 .lin:hover{
 
-    transform: rotate(3deg); /* Corrected the property name and value for rotation */
+    transform: rotate(3deg);
+}
+.lin {
+  position: absolute;
+  top: 120%; 
+  left: 35%;;
+  transition: color 0.3s, transform 0.3s; 
+}
+
+
+.lin.responsive {
+  top: 80%;
+  left: 50%;
 }
