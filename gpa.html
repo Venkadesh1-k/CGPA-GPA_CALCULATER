@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPA Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 400px;
+      margin: auto;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: calc(100% - 12px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .subject-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .subject-input {
+      margin-bottom: 15px;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #4caf50;
+    }
+    .hm
+    {
+        position: absolute;
+        top:15%;
+        left:3%;
+        font-size: 30px;
+        text-decoration: none;
+        color: yellow;
+    }
+  </style>
+</head>
+<body style="background-color: #2a313a">
+    <a class="hm" href="index.html"> Back to Home Page !!!</a>
+  <form id="gpaForm">
+    <label for="numSubjects">Number of Subjects:</label>
+    <input type="number" id="numSubjects" placeholder="e.g., 5">
+
+    <button type="button" onclick="generateSubjectFields()">Generate Input Fields</button>
+
+    <div id="subjectInputs" class="subject-container"></div>
+
+    <button type="button" onclick="calculateOverallGPA()">Calculate GPA</button>
+
+    <div id="result" class="result"></div>
+  </form>
+
+  <script>
+    function generateSubjectFields() {
+      var numSubjects = parseInt(document.getElementById('numSubjects').value);
+
+      if (!isNaN(numSubjects) && numSubjects > 0) {
+        var subjectInputsContainer = document.getElementById('subjectInputs');
+        subjectInputsContainer.innerHTML = '';
+
+        for (var i = 1; i <= numSubjects; i++) {
+          var creditLabel = document.createElement('label');
+          creditLabel.textContent = 'Enter Credit Hours for Subject ' + i + ':';
+
+          var creditInput = document.createElement('input');
+          creditInput.type = 'number';
+          creditInput.className = 'subject-input';
+          creditInput.placeholder = 'Subject ' + i + ' Credit Point';
+          creditInput.setAttribute('step', '0.01'); // Allow decimal input
+
+          var pointsLabel = document.createElement('label');
+          pointsLabel.textContent = 'Enter Grade Points for Subject ' + i + ':';
+
+          var pointsInput = document.createElement('input');
+          pointsInput.type = 'number';
+          pointsInput.className = 'subject-input';
+          pointsInput.placeholder = 'Subject ' + i + ' Grade Points';
+          pointsInput.setAttribute('step', '0.01'); // Allow decimal input
+
+          subjectInputsContainer.appendChild(creditLabel);
+          subjectInputsContainer.appendChild(creditInput);
+          subjectInputsContainer.appendChild(pointsLabel);
+          subjectInputsContainer.appendChild(pointsInput);
+        }
+      } else {
+        alert('Please enter a valid number of subjects.');
+      }
+    }
+
+    function calculateOverallGPA() {
+      var subjectInputs = document.querySelectorAll('.subject-input');
+      var totalCreditPoints = 0;
+      var totalCredits = 0;
+
+      for (var i = 0; i < subjectInputs.length; i += 2) {
+        var credit = parseFloat(subjectInputs[i].value);
+        var points = parseFloat(subjectInputs[i + 1].value);
+
+        if (!isNaN(credit) && !isNaN(points)) {
+          totalCreditPoints += credit * points;
+          totalCredits += credit;
+        } else {
+          alert('Please enter valid credit hours and grade points for all subjects.');
+          return;
+        }
+      }
+
+      if (totalCredits > 0) {
+        var overallGPA = totalCreditPoints / totalCredits;
+        document.getElementById('result').innerHTML = 'Your Overall GPA is: ' + overallGPA.toFixed(2);
+      } else {
+        alert('Generate input fields first.');
+      }
+    }
+  </script>
+
+</body>
+</html>
